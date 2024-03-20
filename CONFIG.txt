@@ -1,3 +1,10 @@
 -- No hay configuracion necesaria:
 git add README.txt
 git commit -m "Este es mi primer commit"
+git add README.txt
+git commit -m "Este es mi primer commit"
+git add README.txt
+git commit -m "Este es mi primer commit"
+
+git push
+git add .
