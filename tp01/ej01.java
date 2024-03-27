@@ -1,19 +1,28 @@
 class Punto {
-    float x, y = 0;
+    int x;
+    int y;
+    String nota;
 }
 
 class ej01 {
 
     public static void main(String[] args) {
+        Punto a, b;
+        int z = 10;
 
-        Punto a = new Punto();
-        Punto b = new Punto();
+        z = 10;
+        a = new Punto();
+        a.x = 10; 
+        a.y = 15;
+        a.nota = "Este es un punto";
 
-        a.x = 10; a.y = 15;
-        b.x = 10; b.y = 20;
+        b = new Punto();
+        b.x = 30; 
+        b.y = 45;
+        b.nota = "Este es otro punto";
 
-        System.out.println("X:"+a.x+" Y:"+a.y);
-        System.out.println("X:"+b.x+" Y:"+b.y);
+        System.out.println("X:"+a.x+" Y:"+a.y+" Nota:"+a.nota);
+        System.out.println("X:"+b.x+" Y:"+b.y+" Nota:"+b.nota);
 
     }
 
