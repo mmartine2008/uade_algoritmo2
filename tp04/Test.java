@@ -53,11 +53,34 @@ class Test {
         l.eliminar(5);
         System.out.println(l);        
 
+        l.add(9);
+        System.out.println(l);        
+
+    }
+
+    public static void testPilaLDV() {
+        PilaLDV p = new PilaLDV();
+
+        p.Apilar(4);
+        p.Apilar(2);
+        p.Apilar(10);
+
+        // [ 4 2 10 |
+        System.out.println(p);
+
+        while (!p.PilaVacia()) {
+            p.Desapilar();
+            System.out.println(p);
+        }
+
+        p.Apilar(11);
+        System.out.println(p);
+        
     }
 
     public static void main(String[] args) {
 
-        testLista();
+        testPilaLDV();
 
     }
 

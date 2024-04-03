@@ -6,6 +6,20 @@ public class ListaDoble {
         this.primero = new NodoDoble();
     }
 
+    public int getUltimo() {
+        NodoDoble ultimo = this.primero.getPrev();
+        return ultimo.getInfo();
+    }
+
+    public void sacarUltimo() {
+        NodoDoble ultimo = this.primero.getPrev();
+
+        NodoDoble anterior = ultimo.getPrev();
+        anterior.setNext(null);
+        this.primero.setPrev(anterior);
+
+    }
+
     public void add(int x) {
         // Creo el nuevo
         NodoDoble nuevo = new NodoDoble();
@@ -28,7 +42,7 @@ public class ListaDoble {
         String out = "";
 
         if (this.vacia()) {
-            return "<vacia>";
+            return "";
         }
 
         pivote = primero.getNext();
