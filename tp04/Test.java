@@ -1,4 +1,20 @@
 class Test {
+
+    public static void testLista00() {
+        Lista l = new Lista();
+
+        l.add(5);
+        System.out.println(l);
+
+        l.add(3);
+        System.out.println(l);
+
+        l.add(8);
+        System.out.println(l);
+
+
+    }
+
     public static void testLista() {
         Lista l = new Lista();
 
@@ -41,7 +57,7 @@ class Test {
 
     public static void main(String[] args) {
 
-        testListaDoble();
+        testLista();
 
     }
 

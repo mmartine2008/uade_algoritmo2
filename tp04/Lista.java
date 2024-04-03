@@ -10,8 +10,7 @@ public class Lista {
         Nodo nuevo = new Nodo();
         nuevo.setInfo(x);
 
-        Nodo pivote = new Nodo();
-        pivote = this.primero;
+        Nodo pivote = this.primero;
         while (pivote.getNext() != null) {
             pivote = pivote.getNext();
         }
@@ -42,7 +41,6 @@ public class Lista {
     // Si el valor existe, devuelve el nodo, sino null
     public Nodo existe(int value) {
         Nodo pivote;
-        String out = "";
 
         pivote = primero.getNext();
         while (pivote != null) {
