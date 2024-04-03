@@ -68,7 +68,9 @@ public class ListaDoble {
             this.primero.setPrev(pivote.getPrev());
 
             prev.setNext(next);
-            next.setPrev(prev);
+            if (next != null) {
+                next.setPrev(prev);
+            }
 
             pivote.setNext(null);
             pivote.setNext(null);
