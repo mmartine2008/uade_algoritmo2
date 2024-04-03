@@ -7,6 +7,16 @@ class Test {
         l.add(8);
 
         System.out.println(l);
+
+        l.eliminar(3);
+        System.out.println(l);
+
+        l.eliminar(8);
+        System.out.println(l);        
+
+        l.eliminar(5);
+        System.out.println(l);        
+
     }
 
     public static void main(String[] args) {
