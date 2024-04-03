@@ -14,7 +14,7 @@ public class PilaTF implements PilaTDA {
  	} 
 
     public void Apilar(int x){  
-        this.datos[indice] = x;  
+        this.datos[this.indice] = x;  
         this.indice++; 
     } 
 
@@ -38,7 +38,10 @@ public class PilaTF implements PilaTDA {
         }
         out = "PilaTF: ["+ out+"|"+"\n";
         out = out + "Tamaño: "+ this.indice+"\n";
-        out = out + "Tope: "+ this.datos[this.indice-1]+"\n";
+        if (!this.PilaVacia())
+        {
+            out = out + "Tope: "+ this.Tope() +"\n";
+        }
 
         return out;
     } 
