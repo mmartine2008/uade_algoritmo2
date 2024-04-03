@@ -1,23 +1,25 @@
 public class Lista {
 
     Nodo primero;
-    Nodo ultimo;
 
     public Lista() {
         this.primero = new Nodo();
-        this.ultimo = this.primero;
     }
 
     public void add(int x) {
         Nodo nuevo = new Nodo();
         nuevo.setInfo(x);
-        this.ultimo.setNext(nuevo);
-        this.ultimo = nuevo;
+
+        Nodo pivote = new Nodo();
+        pivote = this.primero;
+        while (pivote.getNext() != null) {
+            pivote = pivote.getNext();
+        }
+        pivote.setNext(nuevo);
     }
 
     public boolean vacia() {
-        // return this.primero.getNext() == null;
-        return this.primero == this.ultimo;
+        return this.primero.getNext() == null;
     }
 
     public String toString() {
@@ -66,9 +68,6 @@ public class Lista {
         if (pivote != null) {
             prev.setNext(pivote.getNext());
 
-            if (pivote == this.ultimo) {
-                this.ultimo = prev;
-            }
         }
     }
 
