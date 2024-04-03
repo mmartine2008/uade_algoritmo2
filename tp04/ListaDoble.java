@@ -65,6 +65,8 @@ public class ListaDoble {
             NodoDoble prev = pivote.getPrev();
             NodoDoble next = pivote.getNext();
 
+            this.primero.setPrev(pivote.getPrev());
+
             prev.setNext(next);
             next.setPrev(prev);
 
