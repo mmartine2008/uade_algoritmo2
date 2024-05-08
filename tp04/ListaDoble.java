@@ -17,7 +17,38 @@ public class ListaDoble {
         NodoDoble anterior = ultimo.getPrev();
         anterior.setNext(null);
         this.primero.setPrev(anterior);
+    }
 
+    public void sacarPrimero() {
+        NodoDoble primer = this.primero.getNext();
+
+        NodoDoble segundo = primer.getNext();
+        this.primero.setNext(segundo);
+        if (segundo != null) {
+            segundo.setPrev(this.primero);
+        } else {
+            this.primero.setPrev(this.primero);
+        }
+        
+    }
+
+    public void insert(int x) {
+        // Creo el nuevo
+        NodoDoble nuevo = new NodoDoble();
+        nuevo.setInfo(x);
+
+        NodoDoble primerNodo = this.primero.getNext();
+
+        nuevo.setPrev(this.primero);
+        nuevo.setNext(primerNodo);
+
+        this.primero.setNext(nuevo);
+        if (primerNodo != null) {
+            primerNodo.setPrev(nuevo);
+        } else {
+            this.primero.setPrev(nuevo);
+        }
+        
     }
 
     public void add(int x) {
