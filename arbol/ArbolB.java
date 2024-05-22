@@ -1,117 +1,226 @@
 package arbol;
-
-
 public class ArbolB implements TDAArbol {
+    NodoAB raiz ;
 
-    private NodoAB raiz;
+    NodoAB getNodo() {
+        return this.raiz;
+    }
 
     public ArbolB() {
         this.InicializaArbol();
     }
 
+    //Indica si el arbol está vacio
+    public boolean EsVacio() {
+        return (this.raiz == null);
+    }
+
+    //Crea un arbol vacio
     public void InicializaArbol() {
         this.raiz = null;
     }
 
-    public boolean esVacio() {
-        return this.raiz == null;
-    } 
-
-    public int Raiz() {
-        return this.raiz.getInfo();
-    }
-
+    //Devuelve el sub-Arbol izquierdo
     public TDAArbol HijoIzquierdo() {
         return this.raiz.getIzquierdo();
     }
 
+    //Devuelve el sub-Arbol derecho
     public TDAArbol HijoDerecho() {
         return this.raiz.getDerecho();
     }
 
-    public void Agregar(int valor) {
-        if (this.esVacio()) {
-            this.raiz = new NodoAB(valor);
-            
+    //Devuelve la raiz de un árbol, si es que existe.
+    public int Raiz() {
+        return this.raiz.getInfo();
+    }
+
+    // agrega un elemento x
+    public void Agregar(int x) {
+        if (this.EsVacio()) {
+            this.raiz = new NodoAB(x);
         } else {
-            if (valor < this.Raiz() ) {
-                this.raiz.getIzquierdo().Agregar(valor);
+            if (x < this.Raiz()) {
+                this.raiz.getIzquierdo().Agregar(x);
             } else {
-                this.raiz.getDerecho().Agregar(valor);
+                this.raiz.getDerecho().Agregar(x);
             }
-        }
-    }
-
-    private int menor(TDAArbol a) {
-        if (a.HijoIzquierdo().esVacio()) {
-            return a.Raiz();
-        } else {
-            return menor(a.HijoIzquierdo());
-        }
-    }
-
-    private int mayor(TDAArbol a) {
-        if (a.HijoDerecho().esVacio()) {
-            return a.Raiz();
-        } else {
-            return mayor(a.HijoDerecho());
         }
     }
 
     private boolean esHoja() {
-        return this.HijoDerecho().esVacio() && this.HijoIzquierdo().esVacio();
+        if (this.HijoIzquierdo().EsVacio() && this.HijoDerecho().EsVacio()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-    public void Eliminar(int valor) {
-        if (this.esVacio())
-        {
+    private int mayor(TDAArbol arbol) {
+        if (arbol.HijoDerecho().EsVacio()) {
+            return arbol.Raiz();
+        } else {
+            return mayor(arbol.HijoDerecho());
+        }
+    }
+
+    private int menor(TDAArbol arbol) {
+        if (arbol.HijoIzquierdo().EsVacio()) {
+            return arbol.Raiz();
+        } else {
+            return menor(arbol.HijoIzquierdo());
+        }
+    }
+
+    // elimina un elemento x    
+    public void Eliminar(int x) {
+        if (this.EsVacio()) {
             return;
         }
-
-        if ((this.Raiz() == valor) && esHoja()) {
+        if ((this.Raiz() == x) && this.esHoja()) {
             this.InicializaArbol();
         } else {
-            if ((this.Raiz() == valor) && this.HijoDerecho().esVacio()) {
-                this.raiz.setInfo(this.mayor(this.HijoIzquierdo()));
-                this.HijoIzquierdo().Eliminar(this.raiz.getInfo());
+            if ((this.Raiz() == x) && this.HijoDerecho().EsVacio()) {
+                int valorMayor = this.mayor(this.HijoIzquierdo());
+                this.raiz.setInfo(valorMayor);
+                this.HijoIzquierdo().Eliminar(valorMayor);
             }
-            if ((this.Raiz() == valor) && this.HijoIzquierdo().esVacio()) {
-                this.raiz.setInfo(this.menor(this.HijoDerecho()));
-                this.HijoDerecho().Eliminar(this.raiz.getInfo());
+            if (this.Raiz() == x) {
+                int valorMenor = this.menor(this.HijoDerecho());
+                this.raiz.setInfo(valorMenor);
+                this.HijoDerecho().Eliminar(valorMenor);
             }
-            if (this.Raiz() > valor) {
-                this.HijoIzquierdo().Eliminar(valor);
+            if (this.Raiz() > x) {
+                this.HijoIzquierdo().Eliminar(x);
             } else {
-                this.HijoDerecho().Eliminar(valor);
+                this.HijoDerecho().Eliminar(x);
             }
+
         }
     }
 
-    public String generarSalida(TDAArbol arbol, int nivel) {
-        if (arbol.esVacio()) {
+    // Devuelve espacios, para estetica
+    private String espacios(int n) {
+        String salida = "";
+        for (int i = 0; i < n*2; i++) {
+            salida = salida + " ";
+        }
+        return salida;
+    }
+
+    /**
+     *  Arbol (6, (2, ((1,5), 8) ), (8,,(9,,)))        
+     * 
+     * 6
+     *   2
+     *      1
+     *      5
+     *   8
+     *      9
+     */
+    private String show(TDAArbol arbol, int profundidad)
+    {
+        if (arbol.EsVacio())        
+        {
             return "";
-        } else {
-            String salida = "";
-
-            for (int i = 0; i < nivel; i++) {
-                salida = salida + "  ";
-            }
-    
-            salida += arbol.Raiz() + "\n";
-            salida += generarSalida(arbol.HijoIzquierdo(), nivel+1);
-            salida += generarSalida(arbol.HijoDerecho(), nivel+1);
-    
-            return salida;
-    
         }
 
-    }
+        String salida = this.espacios(profundidad);
+
+        salida += arbol.Raiz() + "\n";
+        salida += show(arbol.HijoIzquierdo(), profundidad+1);
+        salida += show(arbol.HijoDerecho(), profundidad+1);
+        return salida;
+    }  
 
     public String toString() {
-        String salida = "";
+        int profundidadArbol = profundidad(this);
 
-        salida = this.generarSalida(this, 0);
+        String salida = this.show(this, 0);
+        salida += "\n" + "La profundidad del arbol es: "+profundidadArbol;
+        salida += "\n" + "La suma de sus nodos es:" + this.suma(this);
+        salida += "\n" + "La cantidad de nodos es:" + this.cantidad(this);
+        double prom = ((double) this.suma(this)) / this.cantidad(this);
+        salida += "\n" + "el promedio de los nodos es :" + prom;
+
+        salida += "\n" + "Diferencia de altura es :" + this.getNodo().getDiferenciaAltura();
 
         return salida;
     }
+
+    public int profundidad(TDAArbol arbol) {
+        if (arbol.EsVacio() || (arbol.HijoIzquierdo().EsVacio() && arbol.HijoDerecho().EsVacio()))
+        {
+            return 0;
+        } else {
+            return 1 +Math.max(
+                            profundidad(arbol.HijoIzquierdo()), 
+                            profundidad(arbol.HijoDerecho())
+                            );
+        }
+    }
+
+    public int cantidad(TDAArbol arbol) {
+        if (arbol.EsVacio())
+        {
+            return 0;
+        } else {
+            return 1 + cantidad(arbol.HijoIzquierdo()) + 
+            cantidad(arbol.HijoDerecho())
+                            ;
+        }
+    }    
+
+    public int suma(TDAArbol arbol) {
+        if (arbol.EsVacio()) {
+            return 0;
+        } else {
+
+            return arbol.Raiz() + 
+                            suma(arbol.HijoIzquierdo()) + 
+                            suma(arbol.HijoDerecho());
+        }
+    }
+
+    public void preOrder(TDAArbol arbol) {
+
+        if (!arbol.EsVacio()) {
+            System.out.print(arbol.Raiz() + " ");
+            preOrder(arbol.HijoIzquierdo());
+            preOrder(arbol.HijoDerecho());
+        }
+    }
+
+    public void inOrder(TDAArbol arbol) {
+
+        if (!arbol.EsVacio()) {
+            inOrder(arbol.HijoIzquierdo());
+            System.out.print(arbol.Raiz() + " ");
+            inOrder(arbol.HijoDerecho());
+        }
+    }    
+
+
+    public void postOrder(TDAArbol arbol) {
+
+        if (!arbol.EsVacio()) {
+            inOrder(arbol.HijoIzquierdo());
+            inOrder(arbol.HijoDerecho());
+            
+            System.out.print(arbol.Raiz() + " ");
+        }
+    } 
+
+    public void setDiferenciaAltura(ArbolB arbol) {
+
+        if (!arbol.EsVacio()) {
+            int altIzq = profundidad(arbol.HijoIzquierdo());
+            int altDer = profundidad(arbol.HijoDerecho());
+            int diferencia = altDer - altIzq;
+            arbol.getNodo().setDiferenciaAltura(diferencia);            
+        }
+    }   
+    
+    
 }

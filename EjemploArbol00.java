@@ -17,7 +17,14 @@ class EjemploArbol00 {
         a.Agregar(7);
         a.Agregar(10);        
         System.out.println(a);
+        System.out.println("------------------------");
 
+        a.Eliminar(5);
+        System.out.println(a);
+        System.out.println("------------------------");
+
+        a.Eliminar(6);
+        System.out.println(a);
     }
 
 }
