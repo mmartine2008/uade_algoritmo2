@@ -62,7 +62,7 @@ public class Test {
         System.out.println("\n");
     }
 
-    public static void main(String[] args) {
+    public static void test02() {
         int maximo = 5;
         int [] numeros = numerosAleatoriosSinRepetir(maximo, 25);
         mostrarArreglo(numeros, maximo);
@@ -75,6 +75,27 @@ public class Test {
         arbol.setDiferenciaAltura(arbol);
         
         System.out.println(arbol);
+    }
+
+    public static void test03() {
+        int maximo = 5;
+        int [] numeros = numerosAleatoriosSinRepetir(maximo, 25);
+        mostrarArreglo(numeros, maximo);
+        
+        ArbolB arbol = new ArbolB();
+
+        for (int i = 0; i < maximo; i++) {
+            arbol.Agregar(numeros[i]);
+        }
+
+//        arbol.setDiferenciaAltura(arbol);
+        
+        System.out.println(arbol);
+        
+    }
+
+    public static void main(String[] args) {
+        test03();
     }
 
 }

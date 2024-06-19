@@ -67,14 +67,12 @@ public class Conjunto implements ConjuntoTDA {
     //     out = out + "Elegir: "+ this.Elegir()+"\n";
 
     //     return out;
-    // }    
-    
+    // }  
     public String toString() {
         String out = "";
         for (int i = 0; i < this.indice; i++) {
             out = out + " " + this.datos[i];
         }
-
-        return "{"+out+"}";
-    }  
+        return "{" + out + "}";
+    }    
 }

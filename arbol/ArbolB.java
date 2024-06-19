@@ -2,8 +2,12 @@ package arbol;
 public class ArbolB implements TDAArbol {
     NodoAB raiz ;
 
-    NodoAB getNodo() {
+    public NodoAB getNodo() {
         return this.raiz;
+    }
+
+    public NodoAB setNodo(NodoAB raiz) {
+        return this.raiz = raiz;
     }
 
     public ArbolB() {
@@ -35,18 +39,57 @@ public class ArbolB implements TDAArbol {
         return this.raiz.getInfo();
     }
 
-    // agrega un elemento x
+    private int getFE(ArbolB a) {
+        int FE = a.getNodo().getDiferenciaAltura();
+        return FE;
+	}
+
+	private void balancear(ArbolB a) {	
+		if (getFE(a) >= 2) {
+			System.out.print("Rotacion ");
+			if (getFE((ArbolB) a.HijoDerecho()) >= 0) {
+				System.out.println("Simple a izquierda ");
+				rotarIzq(a);
+			}
+			else
+			{
+				System.out.println("Doble derecha-izquierda");
+				rotarDer((ArbolB) a.HijoDerecho());
+				rotarIzq(a);
+			}
+		}
+		else
+			if (getFE(a) <= -2) {	
+				System.out.print("Rotacion ");
+				if (getFE((ArbolB) a.HijoIzquierdo()) <= 0) {			
+					System.out.println("Simple a derecha ");
+					rotarDer(a);
+				}
+				else
+				{
+					System.out.println("Doble izquierda-derecha");
+					rotarIzq((ArbolB) a.HijoIzquierdo());
+					rotarDer(a);
+				}
+			}
+				
+	}
+
     public void Agregar(int x) {
         if (this.EsVacio()) {
             this.raiz = new NodoAB(x);
         } else {
             if (x < this.Raiz()) {
                 this.raiz.getIzquierdo().Agregar(x);
+                setDiferenciaAltura(this);
+                balancear(this);
             } else {
                 this.raiz.getDerecho().Agregar(x);
+                setDiferenciaAltura(this);
+                balancear(this);
             }
         }
-    }
+    }    
 
     private boolean esHoja() {
         if (this.HijoIzquierdo().EsVacio() && this.HijoDerecho().EsVacio()) {
@@ -98,6 +141,8 @@ public class ArbolB implements TDAArbol {
             }
 
         }
+        this.setDiferenciaAltura(this);
+        this.balancear(this);
     }
 
     // Devuelve espacios, para estetica
@@ -218,9 +263,39 @@ public class ArbolB implements TDAArbol {
             int altIzq = profundidad(arbol.HijoIzquierdo());
             int altDer = profundidad(arbol.HijoDerecho());
             int diferencia = altDer - altIzq;
-            arbol.getNodo().setDiferenciaAltura(diferencia);            
+            arbol.getNodo().setDiferenciaAltura(diferencia);  
+            
+            if (!arbol.HijoIzquierdo().EsVacio()) {
+                setDiferenciaAltura((ArbolB) arbol.HijoIzquierdo());
+            }
+            if (!arbol.HijoDerecho().EsVacio()) {
+                setDiferenciaAltura((ArbolB) arbol.HijoDerecho());
+            }
+
         }
     }   
+
+    private void rotarIzq(ArbolB a) {
+        NodoAB nuevoPadre = ((ArbolB) a.HijoDerecho()).getNodo(); 
+//El hijo derecho pasa a ser raiz (nuevo padre)
+        ArbolB hijoDerecho = (ArbolB)a.HijoDerecho();
+        hijoDerecho.setNodo(nuevoPadre.getIzquierdo().getNodo()); 
+// El hijo izquierdo de la nueva ra�z pasa a ser el hijo derecho del padre antiguo
+        nuevoPadre.getIzquierdo().setNodo(a.getNodo()); 
+//El padre antiguo se convierte hijo izquierdo de la nueva ra�z
+        a.setNodo(nuevoPadre); 
+//Se reemplaza la raiz (el nodo padre) por el nuevo nodo padre
+    }
     
+    private void rotarDer(ArbolB a) {
+        NodoAB nuevoPadre = ((ArbolB) a.HijoIzquierdo()).getNodo(); 
+//El hijo izquierdo pasa a ser el padre
+        ((ArbolB) a.HijoIzquierdo()).setNodo(nuevoPadre.getDerecho().getNodo());
+// El hijo derecho del nuevo padre pasa a ser el izquierdo del padre antiguo
+        nuevoPadre.getDerecho().setNodo(a.getNodo()); 
+//El padre se convierte en hijo derecho de la nueva raiz
+        a.setNodo(nuevoPadre); 
+//Se reemplaza la ra�z (el nodo padre) por el nuevo nodo padre
+    }    
     
 }
